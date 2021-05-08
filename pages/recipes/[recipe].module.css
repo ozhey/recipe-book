@@ -1,0 +1,208 @@
+.layout {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    height: 100%;
+}
+
+.layout h1 {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.layout h2 {
+    margin: 15px 0px;
+}
+
+.layout h3 {
+    margin: 10px 0px;
+}
+
+.recipe {
+    background-color: var(--background);
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.image-container {
+    position: relative;
+    width: min(100%, 700px);
+    padding-top: min(56.25%, 393px);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 20px auto 3px;
+    border: 1px solid var(--border);
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 8px 0px 15px;
+}
+
+.info li {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.info li span {
+    display: flex;
+    justify-content: center;
+    margin: 1px 0px;
+}
+
+/* material icons*/
+
+.info li span span {
+    font-size: 1.2rem;
+    margin-left: 3px;
+}
+
+.description {
+    font-size: 1.1rem;
+    margin: 8px 0px;
+}
+
+.ingredients {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 12px 8px;
+}
+
+.ingredients li input {
+    margin: 7px 3px 7px 12px;
+}
+
+.ingredients h3 {
+    margin: 7px 0px;
+}
+
+.steps {
+    list-style: decimal;
+    list-style-position: outside;
+    padding-right: 20px;
+    margin: 10px 0px;
+}
+
+.steps li {
+    margin: 6px 0px;
+}
+
+.steps li::before {
+    content: "\00a0 ";
+}
+
+/*Bottom*/
+
+.extra {
+    padding: 20px;
+}
+
+.rating {
+    font-size: 0.8rem;
+    width: min(100%, 700px);
+    margin: 0px auto;
+    padding: 0px 3px;
+    display: flex;
+    align-items: center;
+}
+
+.rate {
+    display: flex;
+    align-items: center;
+    margin: 15px 0px;
+}
+
+.stars {
+    color: grey;
+    cursor: pointer;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.stars span {
+    font-size: 1.4rem;
+}
+
+.stars:hover {
+    color: gold;
+}
+
+.stars span:hover~span {
+    color: grey;
+}
+
+.comments {
+    margin: 0px auto;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    margin: 15px 0px;
+}
+
+.comment-body {
+    border-radius: 10px;
+    background-color: var(--surface);
+    flex-grow: 1;
+    padding: 0.8rem;
+}
+
+.comment-body .author {
+    font-weight: bold;
+}
+
+.comment-body .date {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-right: 10px;
+}
+
+.comment-body .text {
+    margin-top: 5px;
+}
+
+.comment-avatar {
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
+    position: relative;
+}
+
+.comment-form * {
+    margin-bottom: 5px;
+}
+
+.comment-form textarea {
+    min-width: 100%;
+    padding: 5px 7px;
+}
+
+.comment-form input[type=text] {
+    padding: 5px 7px;
+}
+
+.comment-form input[type=submit] {
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 15px;
+    background-color: var(--primary);
+}
+
+.comment-form input[type=submit]:hover {
+    background-color: var(--primary-hover);
+}
+
+@media only screen and (max-width: 768px) {
+    .layout h1 {
+        font-size: 2.3rem;
+    }
+    .info {
+        font-size: 0.8rem;
+    }
+}

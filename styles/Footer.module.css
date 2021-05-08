@@ -1,0 +1,12 @@
+.container {
+    background-color: var(--background);
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.theme-button {
+    display: flex;
+    align-items: center;
+    padding: 5px 7px 5px 10px;
+    border-radius: 30px;
+}

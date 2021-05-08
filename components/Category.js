@@ -1,0 +1,16 @@
+import styles from '../styles/Category.module.css';
+import Image from 'next/image';
+
+const Category = ({ category, setCategory }) => {
+
+    return (
+        <div className={styles['container']} onClick={() => setCategory(category)}>
+            <div className={styles['image-container']}>
+                <Image src={(`/assets/imgs/categories/${category}.png`)} layout='fill' objectFit='cover' />
+            </div>
+            <div className={styles['title']}>{category}</div>
+        </div>
+    )
+}
+
+export default Category;

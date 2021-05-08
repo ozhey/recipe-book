@@ -1,0 +1,24 @@
+.container {
+    width: 100px;
+    height: 100px;
+    margin: 3px 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 23px);
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 80px;
+        height: 80px;
+        font-size: 0.9rem;
+    }
+    .image-container {
+        height: calc(80px - 21px);
+    }
+}

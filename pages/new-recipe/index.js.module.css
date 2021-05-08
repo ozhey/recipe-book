@@ -1,0 +1,101 @@
+.layout {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.input-section label {
+    font-size: 1.2rem;
+    margin: 10px 0px;
+}
+
+.input-section input, .input-section textarea {
+    padding: 5px;
+    margin: 10px 0px;
+    width: 100%;
+    resize: vertical;
+}
+
+.input-section select {
+    display: block;
+    padding: 7px;
+    border: 1px solid var(--border);
+}
+
+.ingredient-group {
+    background-color: var(--surface);
+    padding: 15px;
+    margin: 10px 0px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.ingredient-list input {
+    padding: 5px;
+    width: 51%;
+    margin: 5px 0px;
+}
+
+.label-with-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.button-reset {
+    box-shadow: none;
+}
+
+.button-reset:focus {
+    box-shadow: none;
+}
+
+.icon {
+    color: black;
+    margin-right: 5px;
+}
+
+.icon.green {
+    background-color: #c5ffcc;
+    border-radius: 100px;
+}
+
+.icon.red {
+    background-color: #ffc5c5;
+    border-radius: 100px;
+}
+
+.steps {
+    list-style: none;
+    counter-reset: steps-counter;
+}
+
+.steps li {
+    display: flex;
+    align-items: center;
+    counter-increment: steps-counter;
+    padding: 5px 0px;
+}   
+
+.steps li::before {
+    content: counter(steps-counter) ". ";
+    font-weight: bold;
+    height: 100%;
+}
+
+.steps textarea {
+    width: calc(100% - 30px);
+    margin: 0;
+    margin-right: 10px;
+}
+
+.error {
+    margin: -10px 0px 5px 0px;
+    font-size: 0.8rem;
+    color: var(--error);
+}

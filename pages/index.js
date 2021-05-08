@@ -1,65 +1,38 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState } from 'react';
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import SearchIngredients from '../components/SearchIngredients';
+import FreeSearch from '../components/FreeSearch';
+import Category from '../components/Category';
+import RecipeCard from '../components/RecipeCard';
+import { categories } from '../info.js';
+
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    const [ingredients, setIngredients] = useState([]);
+    const [search, setSearch] = useState('');
+    const [category, setCategory] = useState('');
+    const categoriesList = categories.map((category) => <Category key={category} category={category} setCategory={setCategory} />)
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    return (
+        <div>
+            <Head>
+                <title>ספר מתכונים</title>
+            </Head>
+            <h1 className={styles.h1}>מתכונים שלכם ושל משתמשים מכל רחבי הרשת</h1>
+            <section className={styles['navigation']}>
+                <section className={styles['container']}>
+                    <h2 className={styles['h2']}> חיפוש מתכונים</h2>
+                    <FreeSearch setSearch={setSearch} />
+                    <SearchIngredients ingredients={ingredients} setIngredients={setIngredients} />
+                </section>
+                <section className={styles['categories']}>
+                    {categoriesList}
+                </section>
+            </section>
+            <ul className={styles['recipes']}>
+                <RecipeCard /><RecipeCard /><RecipeCard /><RecipeCard /><RecipeCard /><RecipeCard /><RecipeCard /><RecipeCard /><RecipeCard />
+            </ul>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    )
 }

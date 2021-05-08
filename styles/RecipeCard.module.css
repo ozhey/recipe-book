@@ -1,0 +1,48 @@
+.recipe {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 300px;
+    background-color: var(--surface);
+    margin: 5px;
+}
+
+.information {
+    padding: 8px 12px;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+}
+
+.bar {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 5px 0px;
+}
+
+.h3 {
+    margin: 5px 0px;
+}
+
+.cook {
+    font-size: 0.85rem;
+    margin: 5px 0px;
+}
+
+.cook-name {
+    color: rgb(92, 92, 255);
+}
