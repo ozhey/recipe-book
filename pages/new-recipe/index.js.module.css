@@ -10,9 +10,10 @@
     margin-bottom: 20px;
 }
 
-.input-section label {
+.input-section label, .label {
+    display: inline-block;
     font-size: 1.2rem;
-    margin: 10px 0px;
+    margin: 5px 0px;
 }
 
 .input-section input, .input-section textarea {
@@ -48,6 +49,9 @@
 }
 
 .button-reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-shadow: none;
 }
 
@@ -80,7 +84,7 @@
     align-items: center;
     counter-increment: steps-counter;
     padding: 5px 0px;
-}   
+}
 
 .steps li::before {
     content: counter(steps-counter) ". ";
@@ -98,4 +102,36 @@
     margin: -10px 0px 5px 0px;
     font-size: 0.8rem;
     color: var(--error);
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.category {
+    width: 200px;
+    font-size: 1rem;
+}
+
+.category input {
+    margin: 5px;
+}
+
+.submit {
+    padding: 5px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.submit:hover {
+    background-color: var(--primary-hover);
 }

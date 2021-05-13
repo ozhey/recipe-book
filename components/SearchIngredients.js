@@ -9,7 +9,6 @@ const SearchIngredients = ({ ingredients, setIngredients }) => {
         let index = ingredients.indexOf(ingredient);
         if (index !== -1) {
             setIngredients(prev => {
-                console.log(index);
                 let tempIng = [...prev];
                 tempIng.splice(index, 1);
                 return tempIng;
@@ -39,7 +38,7 @@ const SearchIngredients = ({ ingredients, setIngredients }) => {
             <div className={styles['search-container']}>
                 <input
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.code === 'Enter' ? addItem() : null}
+                    onKeyDown={(e) => e.key === 'Enter' ? addItem() : null}
                     value={input}
                     type='text' className={styles['search']}
                     placeholder='חיפוש לפי מרכיבים'

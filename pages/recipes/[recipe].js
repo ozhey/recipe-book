@@ -2,54 +2,9 @@ import styles from './[recipe].module.css';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useState } from 'react';
+import { connectToDatabase } from '../../util/mongodb.js';
+import { ObjectID } from 'mongodb'
 
-const dummy = {
-    title: 'קציצות ברוטב עגבניות',
-    description: ' מתכון לבורקס בשר מעולה וממש פשוט להכנה שמפיץ ריח מתכון לבורקס בשר מעולה וממש פשוט להכנה שמפיץ ריח נהדר בכל הבית',
-    image: `https://post.healthline.com/wp-content/uploads/2020/07/pizza-beer-1200x628-facebook-1200x628.jpg`,
-    rating: '4.5',
-    reviews: '12',
-    cook: 'עוז',
-    difficulty: '1',
-    workTime: '30',
-    time: '45',
-    servings: '16-20 עוגיות',
-    ingredients: [
-        {
-            name: 'בצק',
-            list: ['סוכר', 'שמן זית', 'כוס קמח שמרים']
-        },
-        {
-            name: 'מילוי',
-            list: ['עגבנייה קצוצה', 'בצל', '200 גרם בשר בקר טחון', 'מלח', 'פפריקה']
-        }
-    ],
-    steps: [
-        'פורסים את השומר לרצועות דקיקות (2 מ״מ)',
-        'מפלטים פלחי מנדרינה או קלמנטינה (אפשר לקנות משומר)',
-        'מוציאים גרעיני רימון מרימון טרי.',
-        'מעבירים לקערה אחת את 3 המרכיבים.',
-        'מערבבים את כל חומרי הרוטב.',
-    ],
-    comments: [
-        {
-            author: 'עוז',
-            date: dateToString(new Date("October 13, 2014 11:13:00")),
-            text: 'טעים מאד',
-        },
-        {
-            author: 'שירי',
-            date: dateToString(new Date("October 13, 2014 11:13:00")),
-            text: 'מגעיל',
-        },
-        {
-            author: 'דור',
-            date: dateToString(new Date("October 13, 2014 11:13:00")),
-            text: 'אחת שתיים לוש',
-        }
-    ]
-
-}
 
 const diffMap = {
     1: 'קל',
@@ -57,7 +12,9 @@ const diffMap = {
     3: 'קשה'
 }
 
-const RecipePage = ({ recipe = dummy }) => {
+const RecipePage = ({ recipe }) => {
+    if (!recipe) return null;
+    recipe = JSON.parse(recipe);
     const [rated, setRated] = useState(false);
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
@@ -167,6 +124,27 @@ const RecipePage = ({ recipe = dummy }) => {
     )
 }
 
+// This function gets called at build time
+export async function getStaticPaths() {
+    return {
+        paths: [{ params: { recipe: '1' } }, { params: { recipe: '2' } }],
+        fallback: true,
+    }
+}
+
+export async function getStaticProps({ params }) {
+    const { db } = await connectToDatabase();
+    const collection = db.collection('recipes');
+    const id = params.recipe;
+    let recipe = await collection.findOne({ "_id": ObjectID(id) })
+    console.log(recipe);
+    recipe = JSON.stringify(recipe);
+    return {
+        props: { recipe },
+        revalidate: 60
+    }
+}
+
 function dateToString(date) {
     const offsetMs = date.getTimezoneOffset() * 60 * 1000;
     const dateLocal = new Date(date.getTime() - offsetMs);
@@ -179,3 +157,4 @@ function dateToString(date) {
 }
 
 export default RecipePage;
+

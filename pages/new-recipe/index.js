@@ -1,9 +1,9 @@
 import styles from './index.js.module.css';
-import Image from 'next/image';
 import Head from 'next/head';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import ImageUploader from '../../components/ImageUploader';
+import { categories } from '../../info.js';
 
 
 const NewRecipe = () => {
@@ -45,6 +45,15 @@ const NewRecipe = () => {
             </ul>
         </div>
     );
+
+    const categoriesInput = categories.map((category) =>
+        <div key={category} className={styles['category']}>
+            <input type="checkbox" id={category} {...register(`category.${category}`)} />
+            <label htmlFor={category}> {category}</label>
+        </div>
+    );
+
+
 
     for (let i = 0; i < stepsNumber; i++) {
         const options = i === 0 ? { shouldUnregister: true, required: true } : { shouldUnregister: true };
@@ -136,7 +145,10 @@ const NewRecipe = () => {
                             <option value="3">קשה</option>
                         </select>
                         {errors.difficulty && <div className={styles['error']}>שדה זה הינו חובה</div>}
-
+                    </div>
+                    <label className={styles['label']}>קטגוריה / קטגוריות</label>
+                    <div className={styles['categories']}>
+                        {categoriesInput}
                     </div>
                     <div className={styles['input-section']}>
                         <div className={styles['label-with-buttons']}>
@@ -171,7 +183,7 @@ const NewRecipe = () => {
                         <label>טיפים והערות</label>
                         <textarea rows="3" {...register("tips")} />
                     </div>
-                    <input type="submit" />
+                    <input type="submit" className={styles['submit']} value="שלח"/>
                 </form>
             </section>
         </div>

@@ -17,19 +17,17 @@ const ImageUploader = ({ image, file, register }) => {
         }
     }, [image, file]);
 
-    console.log(imageUrl);
-
     return (
         <div className={styles['container']} >
             <div className={styles['preview']}>
                 <div className={styles['img-placeholder']}>
-                    <span class="material-icons" style={{ fontSize: '6rem', opacity: '0.2' }}>image</span>
+                    <span className="material-icons" style={{ fontSize: '6rem', opacity: '0.2' }}>image</span>
                 </div>
                 {imageUrl ? <Image src={imageUrl} layout='fill' objectFit='cover' /> : null}
             </div>
             <input type="file" id="file" {...register("image")} className={styles['input-file']} accept="image/*" />
             <label htmlFor="file" className={styles['button']}>
-                <span class="material-icons" style={{fontSize: '1rem', marginLeft:'2px'}}>file_upload</span>
+                <span className="material-icons" style={{fontSize: '1rem', marginLeft:'2px'}}>file_upload</span>
                 {imageUrl ? 'החלף תמונה' : 'העלאת תמונה'}
             </label>
         </div>
