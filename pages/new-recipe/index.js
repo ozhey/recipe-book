@@ -13,8 +13,19 @@ const NewRecipe = () => {
     let ingredientInputs = {}, steps = [];
     const image = watch("image");
     const onSubmit = (data) => {
+        fetch('/api/new-recipe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                data
+            }),
+        })
+            .then((res) => res.json())
+            .then((result) => console.log(result))
+            .catch((err) => console.log('error'))
         console.log('submit!');
-        console.log(data);
     }
 
     for (let i = 0; i <= ingredientsNumber.length; i++) {
@@ -183,7 +194,7 @@ const NewRecipe = () => {
                         <label>טיפים והערות</label>
                         <textarea rows="3" {...register("tips")} />
                     </div>
-                    <input type="submit" className={styles['submit']} value="שלח"/>
+                    <input type="submit" className={styles['submit']} value="שלח" />
                 </form>
             </section>
         </div>
