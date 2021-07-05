@@ -12,6 +12,7 @@ const NewRecipe = () => {
     const [stepsNumber, setStepsNumber] = useState(1);
     let ingredientInputs = {}, steps = [];
     const image = watch("image");
+    
     const onSubmit = (data) => {
         const { image } = data;
         delete data.image;

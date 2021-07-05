@@ -1,6 +1,7 @@
 .search-container {
     justify-content: center;
     display: flex;
+    margin: 5px;
 }
 
 .search {

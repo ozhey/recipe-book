@@ -3,23 +3,23 @@ import "firebase/analytics"
 import "firebase/auth"
 import "firebase/storage"
 
-let firebaseConfig = {
-  apiKey: "AIzaSyBe3KsTBPaXOkSGxl3hr9oCsHk1KjiXVGQ",
-  authDomain: "recipes-book-537be.firebaseapp.com",
-  projectId: "recipes-book-537be",
-  storageBucket: "recipes-book-537be.appspot.com",
-  messagingSenderId: "308043773158",
-  appId: "1:308043773158:web:669f2da658255f39393727",
-  measurementId: "G-SK1NHMPF72"
+const clientCredentials = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+  firebase.initializeApp(clientCredentials)
+  // Check that `window` is in scope for the analytics module!
+  if (typeof window !== 'undefined') {
+    firebase.analytics()
+  }
 }
 
-let fireAuth = firebase.auth();
-let fireStorage = firebase.storage();
 
-export { firebase, fireAuth, fireStorage };
+export { firebase };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../styles/FreeSearch.module.css'
+import styles from '../styles/SearchBox.module.css'
 
 const SearchBox = ({ defaultValue = '', setSearch, icon, placeholder, resetOnSubmit}) => {
     const [input, setInput] = useState(defaultValue);

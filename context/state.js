@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { fireAuth } from "../util/firebase.js";
+import { firebase } from "../util/firebase.js";
 
 const AppContext = createContext();
 
@@ -8,18 +8,19 @@ const AppStateWrapper = ({ children }) => {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        fireAuth.onAuthStateChanged(function (user) {
+        // Listen authenticated user
+        const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                console.log('You are logged in!');
-                setUser(user);
+                const { uid, email } = user;
+                setUser({ uid, email });
+                console.log('user is: ' + email);
             } else {
-                console.log('No user is logged in.');
-                setUser(null);
+                setUser(null)
+                console.log('signed out');
             }
-        });
+        })
+        return () => unsubscriber()
     }, [])
-
-
 
     return (
         <AppContext.Provider value={{ theme, user, setTheme, setUser }} >

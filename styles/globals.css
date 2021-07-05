@@ -17,13 +17,14 @@
   --error: #B00020;
   --on-error: #FFFFFF;
   background-color: var(--background);
+  color: var(--on-background);
 }
 
 .dark {
   --background: #212121;
   --surface: #272727;
-  --primary: #ddebff;
-  --primary-hover: #d4e6ff;
+  --primary: #ffdddd;
+  --primary-hover: #ffd4d4;
   --secondary: #2a9677;
   --on-background: #FFFFFF;
   --on-surface: #FFFFFF;
@@ -34,6 +35,7 @@
   --error: #CF6679;
   --on-error: #000000;
   background-color: var(--background);
+  color: var(--on-background);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
@@ -46,8 +48,6 @@ html, body {
 
 main {
   min-height: 100vh;
-  background-color: var(--background);
-  color: var(--on-background);
   max-width: min(1000px, 92%);
   margin: 0px auto;
   padding: var(--nav-height) 0px 0px;
@@ -65,7 +65,6 @@ input:focus, button:focus, textarea:focus {
   box-shadow: 0 0 5px var(--primary);
   outline: none;
 }
-
 
 /* ---------- CSS Reset ---------- */
 

@@ -4,14 +4,13 @@
     margin: 3px 5px;
     text-align: center;
     cursor: pointer;
-    transition: all 1.5s;
 }
 
 .image-container {
     position: relative;
     width: 100%;
     height: calc(100% - 23px);
-    transition: all 0.5s;
+    transition: box-shadow 0.5s;
 }
 
 .image-container:hover {

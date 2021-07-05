@@ -69,6 +69,6 @@ export async function getServerSideProps({ query }) {
 
 function setInitialIngredients(query) {
     if (Array.isArray(query)) return query;
-    if (query == 'undefined') return [];
-    return [query];
+    if (typeof query === 'string') return [query];
+    return [];
 }

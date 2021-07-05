@@ -13,11 +13,12 @@
     padding: 0px 15px;
 }
 
-.logo {
-    margin: auto 0px;
-    font-weight: bold;
-    font-size: 1.3rem;
+.image-container {
     cursor: pointer;
+    margin: auto 0px;
+    position: relative;
+    width: 50px;
+    height: 50px;
 }
 
 .navbar-end {
@@ -36,8 +37,17 @@
     color: var(--on-primary);
     cursor: pointer;
     margin-right: 10px;
-    font-weight: bold;
     font-size: 0.9rem;
+}
+
+.navbar-end .button.account {
+    padding: 6px 8px;
+    position: relative;
+}
+
+.account-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .navbar-end .button:hover {
@@ -47,4 +57,36 @@
 .button:focus {
     box-shadow: 0 0 5px var(--primary);
     outline: none;
+}
+
+.dropdown-wrapper {
+    position: absolute;
+    transform: translateX(100%);
+    transform: translateY(100%);
+    width: 100%;
+    height: 100%;
+}
+
+.dropdown {
+    left: 0px;
+    top: 8px;
+    position: absolute;
+    text-align: center;
+    background-color: var(--background);
+    color: var(--on-background);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+    font-weight: normal;
+    width: 180px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.dropdown-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item span{
+    margin: 0px 5px;
 }
