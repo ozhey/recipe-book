@@ -1,8 +1,5 @@
 module.exports = {
-    future: {
-      webpack5: true,
-    },
-    images: {
-      domains: ['post.healthline.com'],
-    }
+  images: {
+    domains: ['post.healthline.com'],
   }
+}

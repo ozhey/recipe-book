@@ -2,25 +2,13 @@ import styles from '../styles/RecipeCard.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const dummy = {
-    id: '123',
-    title: 'מתכון',
-    description: ' מתכון לבורקס בשר מעולה וממש פשוט להכנה שמפיץ ריח מתכון לבורקס בשר מעולה וממש פשוט להכנה שמפיץ ריח נהדר בכל הבית',
-    rating: '4.5',
-    reviews: '12',
-    cook: 'עוז',
-    difficulty: '1',
-    workTime: '30'
-}
-
 const diffMap = {
     1: 'קל',
     2: 'בינוני',
     3: 'קשה'
 }
 
-const RecipeCard = ({ recipe  }) => {
-
+const RecipeCard = ({ recipe }) => {
     return (
         <Link href={`/recipes/${recipe._id}`}>
             <li className={styles['recipe']}>
@@ -38,7 +26,7 @@ const RecipeCard = ({ recipe  }) => {
                     <p className={styles['description']}>{recipe.description}</p>
                     <div className={styles['cook']}>על ידי <span className={styles['cook-name']}>{recipe.author}</span></div>
                     <div className={styles['bar']}>
-                        <span style={{ marginLeft: 'auto' }}>{recipe.reviews} ביקורות</span>
+                        <span style={{ marginLeft: 'auto' }}>{recipe.reviews || 0} ביקורות</span>
                         {recipe.rating}
                         <span className="material-icons" style={{ color: 'gold' }}>star</span>
                     </div>

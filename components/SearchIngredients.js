@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SearchBox from './SearchBox';
 import styles from '../styles/SearchIngredients.module.css'
 
 const SearchIngredients = ({ ingredients, setIngredients }) => {
@@ -26,7 +27,7 @@ const SearchIngredients = ({ ingredients, setIngredients }) => {
             </li>))
     }, [ingredients])
 
-    const addItem = () => {
+    const addItem = (input) => {
         if (input.length) {
             setIngredients((prev) => [...prev, input])
             setInput('');
@@ -35,18 +36,7 @@ const SearchIngredients = ({ ingredients, setIngredients }) => {
 
     return (
         <div>
-            <div className={styles['search-container']}>
-                <input
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' ? addItem() : null}
-                    value={input}
-                    type='text' className={styles['search']}
-                    placeholder='חיפוש לפי מרכיבים'
-                />
-                <button className={styles['submit']} onClick={addItem} >
-                    <span className="material-icons">add</span>
-                </button>
-            </div>
+            <SearchBox defaultValue={input} setSearch={addItem} icon='add' placeholder='חיפוש לפי מרכיבים' resetOnSubmit/>
             <ul>
                 {ingItems}
             </ul>

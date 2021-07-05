@@ -1,7 +1,7 @@
-import styles from './index.js.module.css';
-import Head from 'next/head';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
+import styles from './index.js.module.css';
+import Head from 'next/head';
 import ImageUploader from '../../components/ImageUploader';
 import { categories } from '../../info.js';
 
@@ -13,17 +13,17 @@ const NewRecipe = () => {
     let ingredientInputs = {}, steps = [];
     const image = watch("image");
     const onSubmit = (data) => {
+        const { image } = data;
+        delete data.image;
         fetch('/api/new-recipe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                data
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((result) => console.log(result))
+            .then((result) => console.log('result'))
             .catch((err) => console.log('error'))
         console.log('submit!');
     }

@@ -137,7 +137,6 @@ export async function getStaticProps({ params }) {
     const collection = db.collection('recipes');
     const id = params.recipe;
     let recipe = await collection.findOne({ "_id": ObjectID(id) })
-    console.log(recipe);
     recipe = JSON.stringify(recipe);
     return {
         props: { recipe },

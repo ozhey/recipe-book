@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { connectToDatabase } from '../util/mongodb.js';
 import styles from '../styles/Home.module.css';
 import SearchIngredients from '../components/SearchIngredients';
-import FreeSearch from '../components/FreeSearch';
+import SearchBox from '../components/SearchBox';
 import Category from '../components/Category';
 import RecipeCard from '../components/RecipeCard';
 import { categories } from '../info.js';
@@ -12,7 +12,7 @@ import { categories } from '../info.js';
 
 export default function Home({ recipes }) {
     const router = useRouter();
-    const [ingredients, setIngredients] = useState(router.query.i || []);
+    const [ingredients, setIngredients] = useState(setInitialIngredients(router.query.i));
     const [search, setSearch] = useState(router.query.s);
     const [category, setCategory] = useState(router.query.c);
     const categoriesList = categories.map((category) => <Category key={category} category={category} setCategory={setCategory} />)
@@ -42,8 +42,8 @@ export default function Home({ recipes }) {
             <section className={styles['navigation']}>
                 <section className={styles['container']}>
                     <h2 className={styles['h2']}> חיפוש מתכונים</h2>
-                    <FreeSearch search={search} setSearch={setSearch} />
-                    <SearchIngredients ingredients={ingredients} setIngredients={setIngredients} />
+                    <SearchBox defaultValue={search} setSearch={setSearch} icon="search" placeholder='חיפוש חופשי לפי שם מתכון או משתמש' />
+                    <SearchIngredients ingredients={ingredients} setIngredients={setIngredients} icon="add" />
                 </section>
                 <section className={styles['categories']}>
                     {categoriesList}
@@ -59,7 +59,7 @@ export default function Home({ recipes }) {
 export async function getServerSideProps({ query }) {
     const { db } = await connectToDatabase();
     const collection = db.collection('recipes');
-    const projection = { title: 1, description: 1, rating: 1, reviews: 1, cook: 1, difficulty: 1, workTime: 1 }
+    const projection = { title: 1, description: 1, rating: 1, reviews: 1, author: 1, difficulty: 1, workTime: 1 }
     let recipes = await collection.find({}).project(projection).toArray();
     recipes = JSON.stringify(recipes);
     return {
@@ -67,6 +67,8 @@ export async function getServerSideProps({ query }) {
     }
 }
 
-function setIngredients(query) {
-
+function setInitialIngredients(query) {
+    if (Array.isArray(query)) return query;
+    if (query == 'undefined') return [];
+    return [query];
 }
