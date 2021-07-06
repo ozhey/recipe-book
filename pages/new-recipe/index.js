@@ -26,7 +26,6 @@ const NewRecipe = () => {
             .then((res) => res.json())
             .then((result) => console.log('result'))
             .catch((err) => console.log('error'))
-        console.log('submit!');
     }
 
     for (let i = 0; i <= ingredientsNumber.length; i++) {

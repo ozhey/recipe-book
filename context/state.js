@@ -12,8 +12,10 @@ const AppStateWrapper = ({ children }) => {
         const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 const { uid, email } = user;
-                setUser({ uid, email });
-                console.log('user is: ' + email);
+                fetch(`/api/users/${uid}`)
+                    .then((res) => res.json())
+                    .then((result) => setUser(result))
+                    .catch((error) => console.log(error))
             } else {
                 setUser(null)
                 console.log('signed out');

@@ -12,7 +12,6 @@ const LoginRegister = ({ close }) => {
     const [warning, setWarning] = useState('');
 
     const onSubmit = (data) => {
-        console.log(data);
         const { name, email, password } = data;
         setWarning('');
         setIsLoading(true);
@@ -36,8 +35,6 @@ const LoginRegister = ({ close }) => {
                         },
                         body: JSON.stringify({ uid, email, name }),
                     })
-                        .then((res) => res.json())
-                        .then((result) => console.log(result))
                         .catch((err) => console.log(err))
                         .finally(() => close());
                 })
