@@ -59,7 +59,7 @@ export default function Home({ recipes }) {
 export async function getServerSideProps({ query }) {
     const { db } = await connectToDatabase();
     const collection = db.collection('recipes');
-    const projection = { title: 1, description: 1, rating: 1, reviews: 1, author: 1, difficulty: 1, workTime: 1 }
+    const projection = { title: 1, description: 1, rating: 1, reviews: 1, name: 1, difficulty: 1, workTime: 1 }
     let recipes = await collection.find({}).project(projection).toArray();
     recipes = JSON.stringify(recipes);
     return {

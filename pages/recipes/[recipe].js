@@ -1,9 +1,11 @@
-import styles from './[recipe].module.css';
 import Image from 'next/image';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useAppContext } from '../../context/state.js';
 import { useState } from 'react';
 import { connectToDatabase } from '../../util/mongodb.js';
 import { ObjectID } from 'mongodb'
+import styles from './[recipe].module.css';
 
 
 const diffMap = {
@@ -15,9 +17,11 @@ const diffMap = {
 const RecipePage = ({ recipe }) => {
     if (!recipe) return null;
     recipe = JSON.parse(recipe);
+    const { user } = useAppContext();
+    const router = useRouter();
     const [rated, setRated] = useState(false);
-    const [name, setName] = useState('');
     const [comment, setComment] = useState('');
+
 
     const ingredients =
         <div className={styles['ingredients']}>
@@ -40,25 +44,20 @@ const RecipePage = ({ recipe }) => {
             )}
         </ul>
 
-    const comments =
-        <ul>
-            {recipe.comments.map((comment, i) =>
-                <li key={i} className={styles['comment']}>
-                    <div className={styles['comment-avatar']}>
-                        <Image src={(`/assets/imgs/icons/avatar.webp`)} layout='fill' objectFit='cover' />
-                    </div>
-                    <div className={styles['comment-body']}>
-                        <span className={styles['author']}>{comment.author}</span>
-                        <span className={styles['date']}>{comment.date}</span>
-                        <div className={styles['text']}>{comment.text}</div>
-                    </div>
-                </li>
-            )}
-        </ul>
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('submit');
+        const payload = { type: 'comment', comment };
+        payload.name = user.name;
+        payload.recipeId = recipe._id;
+        fetch(`/api/recipes/${recipe._id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+            .then(router.replace(router.asPath))
+            .catch((err) => console.log('error'))
     }
 
 
@@ -73,7 +72,7 @@ const RecipePage = ({ recipe }) => {
                     <Image src={recipe.image} layout='fill' objectFit='cover' />
                 </div>
                 <div className={styles['rating']}>
-                    <span style={{ marginLeft: 'auto' }}>{recipe.reviews} ביקורות</span>
+                    <span style={{ marginLeft: 'auto' }}>{recipe.reviews || 0} ביקורות</span>
                     {recipe.rating}
                     <span className="material-icons" style={{ color: 'gold' }}>star</span>
                 </div>
@@ -99,26 +98,53 @@ const RecipePage = ({ recipe }) => {
                 {steps}
             </section>
             <section className={styles['extra']}>
-                <div className={styles['comments']}>
-                    <h2>תגובות</h2>
-                    {comments}
-                </div>
-                <div className={styles['rate']}>
-                    <h3>דרג את המתכון:</h3>
-                    <div className={styles['stars']}>
-                        <span className="material-icons">star</span>
-                        <span className="material-icons">star</span>
-                        <span className="material-icons">star</span>
-                        <span className="material-icons">star</span>
-                        <span className="material-icons">star</span>
+                {recipe.comments.length ?
+                    <div className={styles['comments']}>
+                        <h2>תגובות</h2>
+                        <ul>
+                            {recipe.comments.map((comment, i) =>
+                                <li key={i} className={styles['comment']}>
+                                    <div className={styles['comment-avatar']}>
+                                        <Image src={(`/assets/imgs/icons/avatar.webp`)} layout='fill' objectFit='cover' />
+                                    </div>
+                                    <div className={styles['comment-body']}>
+                                        <div className={styles['author']}>{comment.name}</div>
+                                        <div className={styles['date']}>{dateToString(new Date(comment.date))}</div>
+                                        <div className={styles['text']}>{comment.comment}</div>
+                                    </div>
+                                </li>
+                            )}
+                        </ul>
                     </div>
-                </div>
-                <h3>הוסף תגובה</h3>
-                <form onSubmit={handleSubmit} className={styles['comment-form']}>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="שם מלא" />
-                    <textarea rows="3" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="התגובה שלך" />
-                    <input type="submit" value="שלח" />
-                </form>
+                    :
+                    <div className={styles['notice']}>
+                        <span className="material-icons" style={{ fontSize: '1.2rem', marginLeft: '5px' }}> comment </span>
+                        <span>עדיין אין תגובות למתכון זה.</span>
+                    </div>
+                }
+                {user ? <>
+                    <div className={styles['rate']}>
+                        <h3>דרג את המתכון:</h3>
+                        <div className={styles['stars']}>
+                            <span className="material-icons">star</span>
+                            <span className="material-icons">star</span>
+                            <span className="material-icons">star</span>
+                            <span className="material-icons">star</span>
+                            <span className="material-icons">star</span>
+                        </div>
+                    </div>
+                    <h3>הוסף תגובה</h3>
+                    <form onSubmit={handleSubmit} className={styles['comment-form']}>
+                        <textarea rows="3" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="התגובה שלך" />
+                        <input type="submit" value="שלח" />
+                    </form>
+                </>
+                    :
+                    <div className={styles['notice']}>
+                        <span className="material-icons" style={{ fontSize: '1.2rem' }}> priority_high </span>
+                        <span>יש להתחבר כדי לדרג את המתכון או להוסיף תגובות.</span>
+                    </div>
+                }
             </section>
         </div>
     )
@@ -127,7 +153,7 @@ const RecipePage = ({ recipe }) => {
 // This function gets called at build time
 export async function getStaticPaths() {
     return {
-        paths: [{ params: { recipe: '1' } }, { params: { recipe: '2' } }],
+        paths: [],
         fallback: true,
     }
 }

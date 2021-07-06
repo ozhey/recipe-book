@@ -135,3 +135,13 @@
 .submit:hover {
     background-color: var(--primary-hover);
 }
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 15px;
+}
+
+.checkbox input {
+    margin-left: 10px;
+}

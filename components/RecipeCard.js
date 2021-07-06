@@ -24,7 +24,7 @@ const RecipeCard = ({ recipe }) => {
                     </div>
                     <h3 className={styles['h3']}>{recipe.title}</h3>
                     <p className={styles['description']}>{recipe.description}</p>
-                    <div className={styles['cook']}>על ידי <span className={styles['cook-name']}>{recipe.author}</span></div>
+                    <div className={styles['cook']}>על ידי <span className={styles['cook-name']}>{recipe.name}</span></div>
                     <div className={styles['bar']}>
                         <span style={{ marginLeft: 'auto' }}>{recipe.reviews || 0} ביקורות</span>
                         {recipe.rating}

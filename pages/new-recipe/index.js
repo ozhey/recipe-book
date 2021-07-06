@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useAppContext } from '../../context/state.js';
 import { useForm } from "react-hook-form";
 import styles from './index.js.module.css';
 import Head from 'next/head';
@@ -8,38 +9,42 @@ import { categories } from '../../info.js';
 
 const NewRecipe = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { user } = useAppContext();
     const [ingredientsNumber, setIngredientsNumber] = useState([1]);    //each array element is an ingredient group, the value itself defines the number of ingredients in each group
     const [stepsNumber, setStepsNumber] = useState(1);
     let ingredientInputs = {}, steps = [];
     const image = watch("image");
-    
+
     const onSubmit = (data) => {
-        const { image } = data;
+        let { image } = data;
+        if (!image.length) image = 'https://post.healthline.com/wp-content/uploads/2020/07/pizza-beer-1200x628-facebook-1200x628.jpg';
         delete data.image;
+        const { uid, name } = user;
+        const recipe = { ...data, uid, name, comments: [], image } 
         fetch('/api/recipes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(recipe),
         })
             .then((res) => res.json())
             .then((result) => console.log('result'))
             .catch((err) => console.log('error'))
     }
 
-    for (let i = 0; i <= ingredientsNumber.length; i++) {
+    for (let i = 0; i < ingredientsNumber.length; i++) {
         ingredientInputs[i] = [];
-        for (let j = 1; j <= ingredientsNumber[i]; j++) {
-            ingredientInputs[i].push(<input key={j} type="text" placeholder="מרכיב" {...register(`ingredients.i${i}.${j}`)} />)
+        for (let j = 0; j < ingredientsNumber[i]; j++) {
+            ingredientInputs[i].push(<input key={j} type="text" placeholder="מרכיב" {...register(`ingredients.${i}.list.${j}`)} />)
         }
     }
 
     const ingredientsElements = ingredientsNumber.map((__, i) =>
         <div key={i} className={styles['ingredient-group']}>
             <label>כותרת</label>
-            <input type="text" placeholder="כותרת" {...register(`ingredients.i${i}.name`, { required: true })} />
-            {errors.ingredients && errors.ingredients[`i${i}`] && errors.ingredients[`i${i}`].name &&
+            <input type="text" placeholder="כותרת" {...register(`ingredients.${i}.name`, { required: true })} />
+            {errors.ingredients && errors.ingredients[`${i}`] && errors.ingredients[`${i}`].name &&
                 <div className={styles['error']}>שדה זה הינו חובה</div>}
             <div className={styles['label-with-buttons']}>
                 <label>מרכיבים</label>
@@ -193,6 +198,10 @@ const NewRecipe = () => {
                     <div className={styles['input-section']}>
                         <label>טיפים והערות</label>
                         <textarea rows="3" {...register("tips")} />
+                    </div>
+                    <div className={styles['checkbox']}>
+                        <input type="checkbox" placeholder="private" {...register("private")} />
+                        <label>מתכון פרטי (רק את/ה תוכל/י לראות את המתכון בעמוד האישי)</label>
                     </div>
                     <input type="submit" className={styles['submit']} value="שלח" />
                 </form>

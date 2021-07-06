@@ -12,6 +12,5 @@ export default async (req, res) => {
     const collection = db.collection('users');
     let user = await collection.findOne({ "uid": userId });
     user = JSON.stringify(user);
-    console.log(user);
     res.status(200).json(user);
 }

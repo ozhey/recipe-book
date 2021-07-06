@@ -10,6 +10,8 @@ export default async (req, res) => {
     const { db } = await connectToDatabase();
     const collection = db.collection('users');
     const user = { ...req.body };
+    user['recipes'] = [];
+    user['favorites'] = [];
     const result = await collection.insertOne(user);
     res.status(200).json({ data: result })
 }

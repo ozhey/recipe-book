@@ -159,7 +159,6 @@
 .comment-body .date {
     font-size: 0.7rem;
     color: var(--text-light);
-    margin-right: 10px;
 }
 
 .comment-body .text {
@@ -196,6 +195,12 @@
 
 .comment-form input[type=submit]:hover {
     background-color: var(--primary-hover);
+}
+
+.notice {
+    display: flex;
+    align-items: center;
+    margin: 8px 0px;
 }
 
 @media only screen and (max-width: 768px) {
