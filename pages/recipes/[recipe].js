@@ -86,7 +86,7 @@ const RecipePage = ({ recipe }) => {
             <section className={styles['recipe']}>
                 <h1>{recipe.title}</h1>
                 <div className={styles['image-container']}>
-                    <Image src={recipe.image} layout='fill' objectFit='cover' />
+                    <Image src={recipe.image} layout='fill' alt={recipe.title} objectFit='cover' />
                 </div>
                 <div className={styles['rating']}>
                     <span style={{ marginLeft: 'auto' }}>{recipe.reviews || 0} ביקורות</span>

@@ -52,7 +52,7 @@ export default function Home({ recipes }) {
                     <div className={styles['clear']}>
                         <span className="material-icons">clear</span>
                         <span>נקה את כל המסננים</span>
-                    </div> 
+                    </div>
                 </Link>
             </section>
             <ul className={styles['recipes']}>
