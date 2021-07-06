@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { firebase } from '../../util/firebase.js';
+import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../context/state.js';
 import { useForm } from "react-hook-form";
 import styles from './index.js.module.css';
@@ -15,12 +17,16 @@ const NewRecipe = () => {
     let ingredientInputs = {}, steps = [];
     const image = watch("image");
 
-    const onSubmit = (data) => {
-        let { image } = data;
-        if (!image.length) image = 'https://post.healthline.com/wp-content/uploads/2020/07/pizza-beer-1200x628-facebook-1200x628.jpg';
-        delete data.image;
-        const { uid, name } = user;
-        const recipe = { ...data, uid, name, comments: [], image } 
+    const onSubmit = async (data) => {
+        let { image, ...recipe } = data;
+        if (!image.length) {
+            image = `/assets/food placeholder.png`;
+        }
+        let downloadUrl = await uploadImageToFirebase(image[0]);
+        recipe.uid = user.uid;
+        recipe.name = user.name;
+        recipe.comments = [];
+        recipe.image = downloadUrl;
         fetch('/api/recipes', {
             method: 'POST',
             headers: {
@@ -208,6 +214,24 @@ const NewRecipe = () => {
             </section>
         </div>
     )
+}
+
+// This function uploads an image to firebase and returns the download url
+async function uploadImageToFirebase(file) {
+    return new Promise(function (resolve, reject) {
+        let uploadTask = firebase.storage().ref().child(`recipes/${uuidv4()}.png`).put(file); // upload 
+        uploadTask.on('state_changed', (snapshot) => {
+            // let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        }, (error) => {
+            console.log(error)
+            reject();
+        }, () => { //Success
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                console.log('Uploaded image available at', downloadURL);
+                resolve(downloadURL)
+            });
+        })
+    });
 }
 
 

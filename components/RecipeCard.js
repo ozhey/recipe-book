@@ -13,7 +13,7 @@ const RecipeCard = ({ recipe }) => {
         <Link href={`/recipes/${recipe._id}`}>
             <li className={styles['recipe']}>
                 <div className={styles['image-container']}>
-                    <Image src={(`https://post.healthline.com/wp-content/uploads/2020/07/pizza-beer-1200x628-facebook-1200x628.jpg`)} layout='fill' objectFit='cover' />
+                    <Image src={recipe.image} layout='fill' objectFit='cover' />
                 </div>
                 <div className={styles['information']}>
                     <div className={styles['bar']}>
