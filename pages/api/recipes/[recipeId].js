@@ -25,7 +25,6 @@ export default async (req, res) => {
         } else if (req.body.type === 'rating') {
             const { rating } = req.body;
             const filter = { _id: ObjectId(recipeId) }
-            console.log('hi');
             const projection = { projection: { rating: 1, reviews: 1, _id: 0 } }
             const result = await recipes.findOne(filter, projection);
             const newRating = ((result.rating * result.reviews) + rating) / (result.reviews + 1)

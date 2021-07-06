@@ -19,14 +19,15 @@ const NewRecipe = () => {
 
     const onSubmit = async (data) => {
         let { image, ...recipe } = data;
-        if (!image.length) {
-            image = `/assets/food placeholder.png`;
-        }
-        let downloadUrl = await uploadImageToFirebase(image[0]);
+        if (image.length) {
+            let downloadUrl = await uploadImageToFirebase(image[0]);
+            recipe.image = downloadUrl;
+        } else {
+            recipe.image = `/assets/food placeholder.png`;
+        } 
         recipe.uid = user.uid;
         recipe.name = user.name;
         recipe.comments = [];
-        recipe.image = downloadUrl;
         recipe.reviews = 0;
         recipe.rating = 0;
         fetch('/api/recipes', {
