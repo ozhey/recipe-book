@@ -227,7 +227,6 @@ async function uploadImageToFirebase(file) {
             reject();
         }, () => { //Success
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                console.log('Uploaded image available at', downloadURL);
                 resolve(downloadURL)
             });
         })
