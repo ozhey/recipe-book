@@ -3,6 +3,7 @@ import { firebase } from '../../util/firebase.js';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../context/state.js';
 import { useForm } from "react-hook-form";
+import { useRouter } from 'next/router'
 import styles from './index.js.module.css';
 import Head from 'next/head';
 import ImageUploader from '../../components/ImageUploader';
@@ -10,8 +11,9 @@ import { categories } from '../../info.js';
 
 
 const NewRecipe = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const { user } = useAppContext();
+    const router = useRouter();
     const [ingredientsNumber, setIngredientsNumber] = useState([1]);    //each array element is an ingredient group, the value itself defines the number of ingredients in each group
     const [stepsNumber, setStepsNumber] = useState(1);
     let ingredientInputs = {}, steps = [];
@@ -24,7 +26,7 @@ const NewRecipe = () => {
             recipe.image = downloadUrl;
         } else {
             recipe.image = `/assets/food placeholder.png`;
-        } 
+        }
         recipe.uid = user.uid;
         recipe.name = user.name;
         recipe.comments = [];
@@ -37,8 +39,10 @@ const NewRecipe = () => {
             },
             body: JSON.stringify(recipe),
         })
-            .then((res) => res.json())
-            .then((result) => console.log('result'))
+            .then(() => {
+                alert('המתכון הועלה בהצלחה!');
+                router.push('/');
+            })
             .catch((err) => console.log('error'))
     }
 
