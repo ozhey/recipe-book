@@ -84,10 +84,10 @@ const TopBar = () => {
 
     const userArea = user ? <>
         <Link href="/new-recipe">
-            <a className={styles['button']}>
+            <div className={styles['button']}>
                 <span className="material-icons" style={{ margin: '0px -7px 0px 1px', fontSize: '1.3rem' }}>add</span>
                 <span>מתכון חדש</span>
-            </a>
+            </div>
         </Link>
         <div className={`${styles['button']} ${styles['account']}`} ref={dropdownRef}>
             <div className={styles['account-wrapper']} onClick={() => setIsDropdownOpen((prev) => !prev)}>
