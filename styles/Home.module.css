@@ -35,6 +35,16 @@
     justify-content: center;
 }
 
+.clear {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 3px 7px;
+}
+
 @media only screen and (max-width: 768px) {
     .h1 {
         font-size: 2.3rem;

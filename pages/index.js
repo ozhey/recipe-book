@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router'
 import { connectToDatabase } from '../util/mongodb.js';
 import styles from '../styles/Home.module.css';
@@ -42,12 +43,17 @@ export default function Home({ recipes }) {
             <section className={styles['navigation']}>
                 <section className={styles['container']}>
                     <h2 className={styles['h2']}> חיפוש מתכונים</h2>
-                    <SearchBox defaultValue={search} setSearch={setSearch} icon="search" placeholder='חיפוש חופשי לפי שם מתכון או משתמש' />
-                    <SearchIngredients ingredients={ingredients} setIngredients={setIngredients} icon="add" />
+                    <SearchBox defaultValue={search} setSearch={setSearch} icon="search" placeholder='חיפוש חופשי' />
                 </section>
                 <section className={styles['categories']}>
                     {categoriesList}
                 </section>
+                <Link href='/'>
+                    <div className={styles['clear']}>
+                        <span className="material-icons">clear</span>
+                        <span>נקה את כל המסננים</span>
+                    </div> 
+                </Link>
             </section>
             <ul className={styles['recipes']}>
                 {recipesItems}
@@ -63,7 +69,7 @@ export async function getServerSideProps({ query }) {
     const projection = { title: 1, description: 1, rating: 1, reviews: 1, name: 1, difficulty: 1, workTime: 1, image: 1 }
     const mongoQuery = {};
     if (s) {
-        mongoQuery.$text = { $search: s }
+        mongoQuery['$text'] = { $search: s }
     }
     if (c) {
         mongoQuery[`category.${c}`] = true;

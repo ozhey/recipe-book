@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -22,6 +23,9 @@ const RecipePage = ({ recipe }) => {
     const [rated, setRated] = useState(false);
     const [comment, setComment] = useState('');
 
+    useEffect(() => {
+        setRated(window.localStorage.getItem(`${recipe._id}`))
+    }, []);
 
     const ingredients =
         <div className={styles['ingredients']}>
@@ -44,11 +48,10 @@ const RecipePage = ({ recipe }) => {
             )}
         </ul>
 
-    const handleSubmit = (e) => {
+    const onSubmitComment = (e) => {
         e.preventDefault();
         const payload = { type: 'comment', comment };
         payload.name = user.name;
-        payload.recipeId = recipe._id;
         fetch(`/api/recipes/${recipe._id}`, {
             method: 'PATCH',
             headers: {
@@ -60,6 +63,20 @@ const RecipePage = ({ recipe }) => {
             .catch((err) => console.log('error'))
     }
 
+    const onRate = (rating) => {
+        fetch(`/api/recipes/${recipe._id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ type: 'rating', rating }),
+        })
+            .then(() => {
+                window.localStorage.setItem(`${recipe._id}`, rating);
+                router.replace(router.asPath)
+            })
+            .catch((err) => console.log('error'))
+    }
 
     return (
         <div className={styles['layout']}>
@@ -73,7 +90,7 @@ const RecipePage = ({ recipe }) => {
                 </div>
                 <div className={styles['rating']}>
                     <span style={{ marginLeft: 'auto' }}>{recipe.reviews || 0} ביקורות</span>
-                    {recipe.rating}
+                    {recipe.rating ? recipe.rating.toFixed(1) : null}
                     <span className="material-icons" style={{ color: 'gold' }}>star</span>
                 </div>
                 <ul className={styles['info']}>
@@ -123,18 +140,23 @@ const RecipePage = ({ recipe }) => {
                     </div>
                 }
                 {user ? <>
-                    <div className={styles['rate']}>
-                        <h3>דרג את המתכון:</h3>
-                        <div className={styles['stars']}>
-                            <span className="material-icons">star</span>
-                            <span className="material-icons">star</span>
-                            <span className="material-icons">star</span>
-                            <span className="material-icons">star</span>
-                            <span className="material-icons">star</span>
-                        </div>
-                    </div>
+                    {
+                        rated ?
+                            null
+                            :
+                            <div className={styles['rate']}>
+                                <h3>דרג את המתכון:</h3>
+                                <div className={styles['stars']}>
+                                    <span className="material-icons" onClick={() => onRate(1)}>star</span>
+                                    <span className="material-icons" onClick={() => onRate(2)}>star</span>
+                                    <span className="material-icons" onClick={() => onRate(3)}>star</span>
+                                    <span className="material-icons" onClick={() => onRate(4)}>star</span>
+                                    <span className="material-icons" onClick={() => onRate(5)}>star</span>
+                                </div>
+                            </div>
+                    }
                     <h3>הוסף תגובה</h3>
-                    <form onSubmit={handleSubmit} className={styles['comment-form']}>
+                    <form onSubmit={onSubmitComment} className={styles['comment-form']}>
                         <textarea rows="3" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="התגובה שלך" />
                         <input type="submit" value="שלח" />
                     </form>
@@ -152,17 +174,23 @@ const RecipePage = ({ recipe }) => {
 
 // This function gets called at build time
 export async function getStaticPaths() {
+    const { db } = await connectToDatabase();
+    const recipes = db.collection('recipes');
+    const findResult = await recipes.find({}).project({ _id: 1 }).toArray();
+    const paths = findResult.map((element) => {
+        return { params: { recipe: element._id.toString() } }
+    })
     return {
-        paths: [],
+        paths,
         fallback: true,
     }
 }
 
 export async function getStaticProps({ params }) {
     const { db } = await connectToDatabase();
-    const collection = db.collection('recipes');
+    const recipes = db.collection('recipes');
     const id = params.recipe;
-    let recipe = await collection.findOne({ "_id": ObjectID(id) })
+    let recipe = await recipes.findOne({ "_id": ObjectID(id) })
     recipe = JSON.stringify(recipe);
     return {
         props: { recipe },

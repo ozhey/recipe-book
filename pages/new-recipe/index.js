@@ -27,6 +27,8 @@ const NewRecipe = () => {
         recipe.name = user.name;
         recipe.comments = [];
         recipe.image = downloadUrl;
+        recipe.reviews = 0;
+        recipe.rating = 0;
         fetch('/api/recipes', {
             method: 'POST',
             headers: {
