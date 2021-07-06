@@ -6,7 +6,7 @@ const Category = ({ category, setCategory }) => {
     return (
         <div className={styles['container']} onClick={() => setCategory(category)}>
             <div className={styles['image-container']}>
-                <Image src={(`/assets/imgs/categories/${category}.png`)} alt={category} layout='fill' objectFit='cover' quality="10"/>
+                <Image src={(`/assets/imgs/categories/${category}.png`)} alt={category} layout='fill' objectFit='cover' quality="5"/>
             </div>
             <div className={styles['title']}>{category}</div>
         </div>
