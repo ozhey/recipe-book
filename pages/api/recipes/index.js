@@ -1,5 +1,5 @@
 
-import { connectToDatabase } from '../../util/mongodb.js';
+import { connectToDatabase } from '../../../util/mongodb.js';
 
 
 export default async (req, res) => {

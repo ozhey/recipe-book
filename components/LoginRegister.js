@@ -28,7 +28,18 @@ const LoginRegister = ({ close }) => {
         } else {
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    close();
+                    const { uid, email } = userCredential.user;
+                    fetch('/api/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ uid, email, name }),
+                    })
+                        .then((res) => res.json())
+                        .then((result) => console.log(result))
+                        .catch((err) => console.log(err))
+                        .finally(() => close());
                 })
                 .catch((error) => {
                     if (error.code.includes('password')) {

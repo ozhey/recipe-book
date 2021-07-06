@@ -9,14 +9,13 @@ import LoginRegister from './LoginRegister';
 import styles from '../styles/TopBar.module.css';
 
 const TopBar = () => {
-    const { user } = useAppContext();
+    const { user, theme, setTheme } = useAppContext();
     const router = useRouter()
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef();
     let login = null, dropdownMenu = null;
 
-    console.log(isDropdownOpen);
 
     useEffect(() => {
         const checkIsClickOutside = (e) => {
@@ -63,6 +62,17 @@ const TopBar = () => {
                     <span className="material-icons">settings</span>
                     <span> הגדרות משתמש</span>
                 </div>
+                {theme === 'dark' ?
+                    <div className={styles['dropdown-item']} onClick={() => setTheme('light')}>
+                        <span className="material-icons">light_mode</span>
+                        <span>  תצוגת יום</span>
+                    </div>
+                    :
+                    <div className={styles['dropdown-item']} onClick={() => setTheme('dark')}>
+                        <span className="material-icons">dark_mode</span>
+                        <span> תצוגת לילה</span>
+                    </div>
+                }
                 <div className={styles['dropdown-item']} onClick={() => onSignout()}>
                     <span className="material-icons">logout</span>
                     <span > התנתק</span>
@@ -72,7 +82,13 @@ const TopBar = () => {
     }
 
 
-    const userArea = user ?
+    const userArea = user ? <>
+        <Link href="/new-recipe">
+            <a className={styles['button']}>
+                <span className="material-icons" style={{ margin: '0px -7px 0px 1px', fontSize: '1.3rem' }}>add</span>
+                <span>מתכון חדש</span>
+            </a>
+        </Link>
         <div className={`${styles['button']} ${styles['account']}`} ref={dropdownRef}>
             <div className={styles['account-wrapper']} onClick={() => setIsDropdownOpen((prev) => !prev)}>
                 <span className="material-icons" style={{ fontSize: '1.15rem' }}>expand_more</span>
@@ -80,6 +96,7 @@ const TopBar = () => {
             </div>
             {dropdownMenu}
         </div>
+    </>
         :
         <div className={styles['button']} onClick={() => setIsLoginOpen((prev) => !prev)}>
             <span className="material-icons" style={{ marginLeft: '3px', fontSize: '1.2rem' }}>login</span>
@@ -96,12 +113,6 @@ const TopBar = () => {
                     </div>
                 </Link>
                 <div className={styles['navbar-end']}>
-                    <Link href="/new-recipe">
-                        <a className={styles['button']}>
-                            <span className="material-icons" style={{ margin: '0px -7px 0px 1px', fontSize: '1.3rem' }}>add</span>
-                            <span>מתכון חדש</span>
-                        </a>
-                    </Link>
                     {userArea}
                 </div>
             </nav>

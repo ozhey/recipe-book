@@ -16,7 +16,7 @@ const NewRecipe = () => {
     const onSubmit = (data) => {
         const { image } = data;
         delete data.image;
-        fetch('/api/new-recipe', {
+        fetch('/api/recipes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
