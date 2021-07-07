@@ -13,7 +13,7 @@ const RecipeCard = ({ recipe }) => {
         <Link href={`/recipes/${recipe._id}`}>
             <li className={styles['recipe']}>
                 <div className={styles['image-container']}>
-                    <Image src={recipe.image} layout='fill' objectFit='cover' />
+                    <Image src={recipe.image} alt={recipe.title} layout='fill' objectFit='cover' quality="10" />
                 </div>
                 <div className={styles['information']}>
                     <div className={styles['bar']}>

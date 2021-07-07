@@ -109,7 +109,7 @@ const TopBar = () => {
             <nav id={styles['navbar']}>
                 <Link href="/">
                     <div className={styles['image-container']}>
-                        <Image src={(`/assets/logo.webp`)} layout='fill' objectFit='cover' quality="10" />
+                        <Image src={(`/assets/logo.webp`)} layout='fill' alt='logo' objectFit='cover' quality="10" />
                     </div>
                 </Link>
                 <div className={styles['navbar-end']}>
