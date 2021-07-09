@@ -1,4 +1,7 @@
-This app was created with Next.js.
-It uses mongoDB as a database and Firebase for storing images and authentication.
+Sefer Matkonim (Recipe Book) let's you upload your own recipes and mark other user's recipes as favorites, creating your own recipe book.
+
+Created with Next.js.
+Database - mongoDB.
+Image storage and authentication - Firebase.
 Designed purely with CSS.
-Passed Lighthouse's performance test with a score of 99 and 90+ in all other tests (accessability, SEO, best practices).
+Passed Lighthouse's test with a score of 90+ in all tests (performance, accessability, SEO and best practices).
