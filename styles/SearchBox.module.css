@@ -11,11 +11,6 @@
     padding: 5px 7px;
 }
 
-.search:focus {
-    outline: 1px solid var(--primary);
-    z-index: 1;
-}
-
 .submit {
     background-color: var(--primary);
     color: var(--on-primary);
@@ -30,7 +25,6 @@
     align-items: center;
 }
 
-.submit:focus {
-    outline: 1px solid var(--primary);
-    z-index: 1;
+.submit:hover {
+    background-color: var(--primary-hover);
 }

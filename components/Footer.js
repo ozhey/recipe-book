@@ -1,5 +1,6 @@
 import styles from '../styles/Footer.module.css'
 import { useAppContext } from '../context/state';
+import Link from 'next/link'
 
 const Footer = () => {
     const { theme, setTheme } = useAppContext();
@@ -26,6 +27,9 @@ const Footer = () => {
     return (
         <footer className={styles['container']}>
             {button}
+            <Link href='https://www.linkedin.com/in/oz-heymann'>
+                <div className={styles['credit']}>Developed by Oz Heymann</div>
+            </Link>
         </footer>
     )
 }

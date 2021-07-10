@@ -63,14 +63,13 @@ export async function getServerSideProps({ query }) {
     const { db } = await connectToDatabase();
     const collection = db.collection('recipes');
     const projection = { title: 1, description: 1, rating: 1, reviews: 1, name: 1, difficulty: 1, workTime: 1, image: 1 }
-    const mongoQuery = {private: false};
+    const mongoQuery = { private: false };
     if (s) {
         mongoQuery['$text'] = { $search: s }
     }
     if (c) {
         mongoQuery[`category.${c}`] = true;
     }
-    console.log(mongoQuery);
     let recipes = await collection.find(mongoQuery).project(projection).toArray();
     recipes = JSON.parse(JSON.stringify(recipes));
     return {
