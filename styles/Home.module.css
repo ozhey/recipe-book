@@ -44,6 +44,7 @@
     border-radius: 10px;
     border: 1px solid var(--border);
     padding: 3px 7px;
+    margin-top: 10px;
 }
 
 .clear:hover {
