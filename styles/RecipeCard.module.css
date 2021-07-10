@@ -17,6 +17,9 @@
 
 .information {
     padding: 8px 12px;
+    height: 209px;
+    display: flex;
+    flex-direction: column;
 }
 
 .image-container {
