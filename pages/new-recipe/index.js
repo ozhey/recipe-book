@@ -14,12 +14,15 @@ const NewRecipe = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const { user } = useAppContext();
     const router = useRouter();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [ingredientsNumber, setIngredientsNumber] = useState([1]);    //each array element is an ingredient group, the value itself defines the number of ingredients in each group
     const [stepsNumber, setStepsNumber] = useState(1);
     let ingredientInputs = {}, steps = [];
     const image = watch("image");
 
     const onSubmit = async (data) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         let { image, ...recipe } = data;
         if (image.length) {
             let downloadUrl = await uploadImageToFirebase(image[0]);
@@ -43,7 +46,10 @@ const NewRecipe = () => {
                 alert('המתכון הועלה בהצלחה!');
                 router.push('/');
             })
-            .catch((err) => console.log('error'))
+            .catch((err) => {
+                alert('אופס! אירעה תקלה. אנא נסה שנית.');
+                setIsSubmitting(false);
+            });
     }
 
     for (let i = 0; i < ingredientsNumber.length; i++) {
@@ -216,7 +222,11 @@ const NewRecipe = () => {
                         <input type="checkbox" placeholder="private" {...register("private")} />
                         <label>מתכון פרטי (רק את/ה תוכל/י לראות את המתכון בעמוד האישי)</label>
                     </div>
-                    <input type="submit" className={styles['submit']} value="שלח" />
+                    {isSubmitting ?
+                        <input type="submit" className={styles['submit']} value="בשליחה..." />
+                        :
+                        <input type="submit" className={styles['submit']} value="שלח" />
+                    }
                 </form>
             </section>
         </div>
