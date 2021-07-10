@@ -17,7 +17,6 @@ const diffMap = {
 
 const RecipePage = ({ recipe }) => {
     if (!recipe) return null;
-    recipe = JSON.parse(recipe);
     const { user } = useAppContext();
     const router = useRouter();
     const [rated, setRated] = useState(false);
@@ -191,7 +190,7 @@ export async function getStaticProps({ params }) {
     const recipes = db.collection('recipes');
     const id = params.recipe;
     let recipe = await recipes.findOne({ "_id": ObjectID(id) })
-    recipe = JSON.stringify(recipe);
+    recipe = JSON.parse(JSON.stringify(recipe));
     return {
         props: { recipe },
         revalidate: 60

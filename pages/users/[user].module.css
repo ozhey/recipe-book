@@ -1,0 +1,42 @@
+.recipe {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    color: var(--on-surface);
+    margin: 5px 0px;
+    padding-left: 15px;
+}
+
+.image-container {
+    cursor: pointer;
+    margin: auto 0px;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 8px;
+    margin: 0px 5px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    background-color: var(--primary);
+    color: var(--on-primary);
+}
+
+.product-title {
+    font-size: 1.1rem;
+    margin: 0px 10px 0px auto;
+}
+
+.h1 {
+    margin: 20px 0px;
+}
+
+.h2 {
+    margin: 20px 0px;
+}

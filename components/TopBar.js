@@ -16,7 +16,6 @@ const TopBar = () => {
     const dropdownRef = useRef();
     let login = null, dropdownMenu = null;
 
-
     useEffect(() => {
         const checkIsClickOutside = (e) => {
             if (isDropdownOpen && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -54,7 +53,7 @@ const TopBar = () => {
     if (isDropdownOpen) {
         dropdownMenu = <div className={styles['dropdown-wrapper']} >
             <div className={styles['dropdown']} >
-                <div className={styles['dropdown-item']} onClick={() => handleClick('/')} >
+                <div className={styles['dropdown-item']} onClick={() => handleClick(`/users/${user.uid}`)} >
                     <span className="material-icons" >person</span>
                     <span> עמוד אישי </span>
                 </div>

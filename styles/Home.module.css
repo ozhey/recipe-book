@@ -40,6 +40,7 @@
     display: flex;
     align-items: center;
     background-color: var(--primary);
+    color: var(--on-primary);
     border-radius: 10px;
     border: 1px solid var(--border);
     padding: 3px 7px;

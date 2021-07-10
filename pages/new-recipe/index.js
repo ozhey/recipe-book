@@ -11,7 +11,7 @@ import { categories } from '../../info.js';
 
 
 const NewRecipe = () => {
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const { user } = useAppContext();
     const router = useRouter();
     const [ingredientsNumber, setIngredientsNumber] = useState([1]);    //each array element is an ingredient group, the value itself defines the number of ingredients in each group
@@ -228,7 +228,6 @@ async function uploadImageToFirebase(file) {
     return new Promise(function (resolve, reject) {
         let uploadTask = firebase.storage().ref().child(`recipes/${uuidv4()}.png`).put(file); // upload 
         uploadTask.on('state_changed', (snapshot) => {
-            // let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         }, (error) => {
             console.log(error)
             reject();

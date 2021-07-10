@@ -9,9 +9,9 @@ const AppStateWrapper = ({ children }) => {
 
     useEffect(() => {
         // Listen authenticated user
-        const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
-            if (user) {
-                const { uid, email } = user;
+        const unsubscriber = firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+            if (firebaseUser) {
+                const { uid, email } = firebaseUser;
                 fetch(`/api/users/${uid}`)
                     .then((res) => res.json())
                     .then((result) => setUser(result))
