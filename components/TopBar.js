@@ -54,8 +54,8 @@ const TopBar = () => {
         dropdownMenu = <div className={styles['dropdown-wrapper']} >
             <div className={styles['dropdown']} >
                 <div className={styles['dropdown-item']} onClick={() => goToPage(`/users/${user.uid}`)} >
-                    <span className="material-icons" >person</span>
-                    <span> עמוד אישי </span>
+                    <span className="material-icons" >menu_book</span>
+                    <span> ספר המתכונים שלי </span>
                 </div>
                 <div className={styles['dropdown-item']} onClick={() => alert('בקרוב!')}>
                     <span className="material-icons">settings</span>
