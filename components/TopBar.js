@@ -38,7 +38,7 @@ const TopBar = () => {
             })
     }
 
-    const handleClick = (path) => {
+    const goToPage = (path) => {
         router.push(path);
         setIsDropdownOpen(false);
     }
@@ -53,11 +53,11 @@ const TopBar = () => {
     if (isDropdownOpen) {
         dropdownMenu = <div className={styles['dropdown-wrapper']} >
             <div className={styles['dropdown']} >
-                <div className={styles['dropdown-item']} onClick={() => handleClick(`/users/${user.uid}`)} >
+                <div className={styles['dropdown-item']} onClick={() => goToPage(`/users/${user.uid}`)} >
                     <span className="material-icons" >person</span>
                     <span> עמוד אישי </span>
                 </div>
-                <div className={styles['dropdown-item']} onClick={() => handleClick('/')}>
+                <div className={styles['dropdown-item']} onClick={() => alert('בקרוב!')}>
                     <span className="material-icons">settings</span>
                     <span> הגדרות משתמש</span>
                 </div>

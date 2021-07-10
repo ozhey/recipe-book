@@ -77,6 +77,10 @@ const RecipePage = ({ recipe }) => {
             .catch((err) => console.log('error'))
     }
 
+    const onFavorite = () => {
+        alert('בקרוב!')
+    }
+
     return (
         <div className={styles['layout']}>
             <Head>
@@ -114,6 +118,14 @@ const RecipePage = ({ recipe }) => {
                 {steps}
             </section>
             <section className={styles['extra']}>
+                {user && user.uid !== recipe.uid ?
+                    <div style={{ cursor: 'pointer' }} className={styles['notice']} onClick={() => onFavorite()}>
+                        <span class="material-icons" style={{ fontSize: '1.4rem', marginLeft: '9px', color: 'red' }}>favorite</span>
+                        <span>הוספה למועדפים שלי </span>
+                    </div>
+                    :
+                    null
+                }
                 {recipe.comments.length ?
                     <div className={styles['comments']}>
                         <h2>תגובות</h2>
@@ -134,7 +146,7 @@ const RecipePage = ({ recipe }) => {
                     </div>
                     :
                     <div className={styles['notice']}>
-                        <span className="material-icons" style={{ fontSize: '1.2rem', marginLeft: '5px' }}> comment </span>
+                        <span className="material-icons" style={{ fontSize: '1.2rem', marginLeft: '12px' }}> comment </span>
                         <span>עדיין אין תגובות למתכון זה.</span>
                     </div>
                 }

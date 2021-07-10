@@ -49,7 +49,7 @@ const UserPage = ({ userData }) => {
             <div className={styles['product-title']}>{recipe.title}</div>
             <Link href={`/recipes/${recipe._id}`}>
                 <button className={styles['button']}>
-                    <span className="material-icons" style={{ marginLeft: '5px', fontSize: '1.3rem' }}>visibility</span>
+                    <span className="material-icons" style={{ marginLeft: '6px', fontSize: '1.3rem' }}>visibility</span>
                     <span>צפייה</span>
                 </button>
             </Link>
@@ -62,16 +62,43 @@ const UserPage = ({ userData }) => {
                 <span>עריכה</span>
             </button>
         </div>)
+ 
+    const myFavorites = userData.favorites.map((recipe) =>
+        <div className={styles['recipe']} key={recipe._id}>
+            <div className={styles['image-container']}>
+                <Image src={recipe.image} layout='fill' alt={recipe.title} objectFit='cover' quality="10" />
+            </div>
+            <div className={styles['product-title']}>{recipe.title}</div>
+            <Link href={`/recipes/${recipe._id}`}>
+                <button className={styles['button']}>
+                    <span className="material-icons" style={{ marginLeft: '6px', fontSize: '1.3rem' }}>visibility</span>
+                    <span>צפייה</span>
+                </button>
+            </Link>
+            <button className={styles['button']} onClick={() => onRemoveFromFavorites(recipe._id)}>
+                <span className="material-icons" style={{ marginLeft: '2px', fontSize: '1.4rem' }}>clear</span>
+                <span>הסר</span>
+            </button>
+        </div>)
 
     return (
         <div className={styles['layout']}>
             <Head>
                 <title>{`ספר מתכונים - ${userData.name}`}</title>
             </Head>
-            <h1 className={styles['h1']}>{userData.name}</h1>
+            <h1 className={styles['h1']}>{`ספר המתכונים של ${userData.name}`}</h1>
             <h2 className={styles['h2']}>המתכונים שלי</h2>
-            {myRecipes}
+            {myRecipes.length ?
+                myRecipes
+                :
+                <div>עדיין לא העלת מתכונים.</div>
+            }
             <h2 className={styles['h2']}>המועדפים שלי</h2>
+            {myFavorites.length ?
+                myFavorites
+                :
+                <div>עדיין לא סימנת מתכונים מועדפים.</div>
+            }
         </div>
     )
 }
